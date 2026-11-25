@@ -16,11 +16,12 @@ export default function OpenApplicationPage() {
           <h1>Geen passende vacature? Stuur toch een bericht.</h1>
           <p className="lead" style={{ margin: "16px 0 22px" }}>
             Vertel welk werk je zoekt, waar je wilt werken en wanneer je kunt starten. We bewaren je gegevens
-            om je te bellen zodra er een opdracht past. Voeg je cv toe als bijlage in de e-mail die opent.
+            om je te bellen zodra er een opdracht past. Je kunt een cv meesturen met het formulier.
           </p>
           <InquiryForm
-            subject="Open sollicitatie"
+            formName="Open sollicitatie"
             submitLabel="Stuur mijn sollicitatie"
+            allowCv
             fields={[
               { name: "name", label: "Naam", required: true },
               { name: "phone", label: "Telefoon", type: "tel", required: true },

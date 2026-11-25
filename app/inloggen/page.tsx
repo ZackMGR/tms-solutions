@@ -19,7 +19,7 @@ export default function LoginPage() {
             dan sturen we de inloglink naar het e-mailadres dat bij je opdracht hoort.
           </p>
           <InquiryForm
-            subject="Aanvraag portaaltoegang"
+            formName="Portaaltoegang"
             submitLabel="Vraag toegang aan"
             note="We mailen alleen een inloglink naar een adres dat bij een lopende opdracht hoort."
             fields={[

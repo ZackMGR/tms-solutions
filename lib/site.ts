@@ -3,6 +3,7 @@ export const company = {
   legalName: "T.M.S. Trading B.V.",
   email: "Admin@tmssolutions.nl",
   emailLabel: "admin@tmssolutions.nl",
+  submissionsEmail: "info@tms-solutions.nl",
   kvk: "96935510",
   vestiging: "000062214209",
   street: "San Marinostraat 193",
@@ -11,7 +12,7 @@ export const company = {
   country: "Nederland",
   mapsUrl:
     "https://maps.google.com/?q=San+Marinostraat+193,+3541+DS+Utrecht",
-  siteUrl: "https://tmssolutions.nl",
+  siteUrl: "https://tms-solutions.nl",
   hours: [
     { day: "Maandag – vrijdag", time: "09:00 – 17:30" },
     { day: "Zaterdag", time: "Op afspraak" },

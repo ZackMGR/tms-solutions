@@ -16,7 +16,7 @@ const sections = [
   {
     title: "2. Welke gegevens",
     body: [
-      "Via de formulieren op deze site vragen we naam, e-mailadres, telefoonnummer en de inhoud van uw bericht. Bij een sollicitatie kunt u zelf een cv meesturen per e-mail.",
+      "Via de formulieren op deze site vragen we naam, e-mailadres, telefoonnummer en de inhoud van uw bericht. Bij een sollicitatie kunt u een cv als PDF of Word-bestand meesturen.",
       "Een burgerservicenummer, een kopie van een identiteitsbewijs of een Verklaring Omtrent het Gedrag vragen we niet via de website. Die gegevens komen alleen aan de orde als er een arbeidsovereenkomst of een wettelijke plicht volgt, en dan via een apart kanaal.",
     ],
   },
@@ -47,7 +47,7 @@ const sections = [
   {
     title: "7. Beveiliging",
     body: [
-      "De formulieren op deze site sturen zelf niets naar een database. Ze openen een e-mail in uw eigen mailprogramma. Wij bewaren berichten in onze mailbox en nemen redelijke maatregelen tegen onbevoegde toegang.",
+      "De formulieren sturen uw bericht per e-mail naar info@tms-solutions.nl. We bewaren die berichten in die mailbox en nemen redelijke maatregelen tegen onbevoegde toegang. Er is geen aparte database voor de formulieren.",
     ],
   },
   {

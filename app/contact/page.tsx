@@ -30,10 +30,10 @@ export default async function ContactPage({ searchParams }: Props) {
         </p>
         <div className="layout-2">
           <InquiryForm
-            subject="Bericht via de website"
+            formName="Contact"
             submitLabel="Verstuur bericht"
             defaults={{ topic }}
-            note="Het formulier opent uw e-mailprogramma met dit bericht. Er wordt niets opgeslagen voordat u de e-mail verstuurt."
+            note="Het bericht wordt direct verstuurd naar info@tms-solutions.nl."
             fields={[
               { name: "topic", label: "Waar gaat het over?", type: "select", options: intents, full: true },
               { name: "name", label: "Naam", required: true },

@@ -62,8 +62,9 @@ export default async function VacancyPage({ params }: Props) {
           </div>
           <aside className="stack">
             <InquiryForm
-              subject={`Sollicitatie: ${vacancy.title}`}
+              formName={vacancy.title}
               submitLabel="Solliciteer"
+              allowCv
               defaults={{ message: `Ik reageer op ${vacancy.title} in ${vacancy.location}.` }}
               fields={[
                 { name: "name", label: "Naam", required: true },

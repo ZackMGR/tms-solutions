@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { company } from "@/lib/site";
 
 type Option = { value: string; label: string };
 
@@ -16,24 +15,28 @@ export type FormField = {
 };
 
 export function InquiryForm({
-  subject,
+  formName,
   submitLabel,
   fields,
   defaults = {},
-  note = "Het formulier opent uw e-mailprogramma met dit bericht. Voeg daar uw cv toe als bijlage wanneer u solliciteert. Er wordt niets opgeslagen voordat u de e-mail verstuurt.",
+  allowCv = false,
+  note = "We sturen uw bericht naar info@tms-solutions.nl. U hoeft zelf geen e-mail te openen.",
 }: {
-  subject: string;
+  formName: string;
   submitLabel: string;
   fields: FormField[];
   defaults?: Record<string, string>;
+  allowCv?: boolean;
   note?: string;
 }) {
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
 
@@ -50,19 +53,32 @@ export function InquiryForm({
       return;
     }
 
-    const lines = [
-      `Bericht via tmssolutions.nl`,
-      ``,
-      ...fields.map((field) => `${field.label}: ${String(data.get(field.name) || "").trim() || "—"}`),
-    ];
-    const href = `mailto:${company.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    data.set("formName", formName);
+    for (const field of fields) data.set(`label.${field.name}`, field.label);
+    if (allowCv) data.set("label.cv", "Cv");
+    setSending(true);
     setError("");
-    setReady(true);
-    window.location.href = href;
+    setReady(false);
+
+    try {
+      const response = await fetch("/api/inquiry", { method: "POST", body: data });
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        setError(payload?.error || "Het bericht kon niet worden verzonden. Probeer het opnieuw.");
+        return;
+      }
+      form.reset();
+      setReady(true);
+    } catch {
+      setError("Het bericht kon niet worden verzonden. Probeer het opnieuw.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate>
+      <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
       {fields.map((field) => (
         <label key={field.name} className={field.full || field.type === "textarea" ? "field full" : "field"}>
           <span>
@@ -91,17 +107,19 @@ export function InquiryForm({
           )}
         </label>
       ))}
+      {allowCv ? (
+        <label className="field full">
+          <span>Cv (PDF of Word, optioneel)</span>
+          <input name="cv" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        </label>
+      ) : null}
       <div className="full">
-        <button className="btn btn-primary" type="submit">
-          {submitLabel}
+        <button className="btn btn-primary" type="submit" disabled={sending}>
+          {sending ? "Versturen…" : submitLabel}
         </button>
       </div>
       {error ? <p className="form-error full">{error}</p> : null}
-      {ready ? (
-        <p className="form-ok full">
-          Uw e-mailprogramma opent met het bericht aan {company.emailLabel}. Verstuur die e-mail om ons te bereiken.
-        </p>
-      ) : null}
+      {ready ? <p className="form-ok full">Uw bericht is verstuurd. We reageren binnen één werkdag.</p> : null}
       <p className="form-note full">{note}</p>
     </form>
   );
