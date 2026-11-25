@@ -20,7 +20,7 @@ export default function SectorsPage() {
         <div className="sector-grid">
           {sectors.map((sector) => (
             <Link className="sector-card" key={sector.slug} href={`/sectoren/${sector.slug}`}>
-              <img src={sector.image} alt="" width={1400} height={933} />
+              <img src={sector.image} alt={`${sector.name} bij TMS Solutions`} width={1400} height={933} />
               <div>
                 <h3>{sector.name}</h3>
                 <p>{sector.tagline}</p>

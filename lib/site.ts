@@ -1,8 +1,8 @@
 export const company = {
   brand: "TMS Solutions",
   legalName: "T.M.S. Trading B.V.",
-  email: "Admin@tmssolutions.nl",
-  emailLabel: "admin@tmssolutions.nl",
+  email: "info@tms-solutions.nl",
+  emailLabel: "info@tms-solutions.nl",
   submissionsEmail: "info@tms-solutions.nl",
   kvk: "96935510",
   vestiging: "000062214209",

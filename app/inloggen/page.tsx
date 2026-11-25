@@ -4,6 +4,7 @@ import { InquiryForm } from "@/components/InquiryForm";
 export const metadata: Metadata = {
   title: "Inloggen",
   description: "Toegang tot het medewerkersportaal van TMS Solutions vraag je persoonlijk aan.",
+  robots: { index: false, follow: false },
 };
 
 export default function LoginPage() {

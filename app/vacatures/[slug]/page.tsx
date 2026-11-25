@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InquiryForm } from "@/components/InquiryForm";
 import { JobList } from "@/components/JobList";
-import { sectorBySlug, vacancies, vacancyBySlug } from "@/lib/site";
+import { company, sectorBySlug, vacancies, vacancyBySlug } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,7 +17,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!vacancy) return { title: "Vacature" };
   return {
     title: vacancy.title,
-    description: vacancy.summary,
+    description: `${vacancy.summary} ${vacancy.location}, ${vacancy.hours}.`,
+    openGraph: {
+      title: vacancy.title,
+      description: vacancy.summary,
+    },
+    twitter: {
+      title: vacancy.title,
+      description: vacancy.summary,
+    },
   };
 }
 
@@ -28,8 +36,31 @@ export default async function VacancyPage({ params }: Props) {
   const sector = sectorBySlug(vacancy.sector);
   const similar = vacancies.filter((item) => item.sector === vacancy.sector && item.slug !== vacancy.slug).slice(0, 3);
 
+  const jobLd = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: vacancy.title,
+    description: `${vacancy.intro} ${vacancy.summary}`,
+    datePosted: "2026-11-25",
+    employmentType: vacancy.hours.startsWith("40") || vacancy.hours.startsWith("38") ? "FULL_TIME" : "PART_TIME",
+    hiringOrganization: {
+      "@type": "Organization",
+      name: company.brand,
+      sameAs: company.siteUrl,
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: vacancy.location,
+        addressCountry: "NL",
+      },
+    },
+  };
+
   return (
     <article className="section page-hero">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobLd) }} />
       <div className="wrap">
         <p className="crumbs">
           <Link href="/vacatures">Vacatures</Link>

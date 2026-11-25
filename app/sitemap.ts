@@ -3,7 +3,7 @@ import { company, sectors, vacancies } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ["", "/vacatures", "/sectoren", "/werknemers", "/werkgevers", "/over-ons", "/contact", "/open-sollicitatie", "/privacybeleid", "/algemene-voorwaarden", "/inloggen"];
+  const staticRoutes = ["", "/vacatures", "/sectoren", "/werknemers", "/werkgevers", "/over-ons", "/contact", "/open-sollicitatie", "/privacybeleid", "/algemene-voorwaarden"];
 
   return [
     ...staticRoutes.map((route) => ({

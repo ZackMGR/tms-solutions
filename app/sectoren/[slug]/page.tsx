@@ -14,7 +14,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const sector = sectorBySlug(slug);
   if (!sector) return { title: "Sector" };
-  return { title: sector.name, description: sector.tagline };
+  return {
+    title: sector.name,
+    description: sector.tagline,
+    openGraph: {
+      title: sector.name,
+      description: sector.tagline,
+    },
+    twitter: {
+      title: sector.name,
+      description: sector.tagline,
+    },
+  };
 }
 
 export default async function SectorPage({ params }: Props) {
@@ -45,7 +56,7 @@ export default async function SectorPage({ params }: Props) {
               </Link>
             </div>
           </div>
-          <img src={sector.image} alt="" width={1400} height={933} />
+          <img src={sector.image} alt={`${sector.name} bij TMS Solutions`} width={1400} height={933} />
         </div>
       </section>
 

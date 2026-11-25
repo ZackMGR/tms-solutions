@@ -14,18 +14,41 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const description =
+  "TMS Solutions bemiddelt en detacheert vakmensen voor opdrachtgevers in bouw, logistiek, techniek, zorg en kantoor. Vanuit Utrecht, door heel Nederland.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(company.siteUrl),
   title: {
-    default: "TMS Solutions — detachering en vakmensen",
+    default: "TMS Solutions — detachering en vakmensen in Nederland",
     template: "%s · TMS Solutions",
   },
-  description:
-    "TMS Solutions bemiddelt vakmensen voor opdrachtgevers in bouw, logistiek, techniek, zorg, kantoor en meer. Vanuit Utrecht, door heel Nederland.",
+  description,
+  applicationName: company.brand,
+  authors: [{ name: company.legalName, url: company.siteUrl }],
+  creator: company.brand,
+  keywords: ["detachering", "bemiddeling", "vakmensen", "uitzendwerk", "Utrecht", "bouw", "logistiek", "techniek", "zorg"],
+  alternates: { canonical: "./" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   openGraph: {
+    type: "website",
     locale: "nl_NL",
     siteName: company.brand,
-    type: "website",
+    title: {
+      default: "TMS Solutions — detachering en vakmensen in Nederland",
+      template: "%s · TMS Solutions",
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: {
+      default: "TMS Solutions — detachering en vakmensen in Nederland",
+      template: "%s · TMS Solutions",
+    },
   },
 };
 
@@ -34,8 +57,10 @@ const jsonLd = {
   "@type": "EmploymentAgency",
   name: company.brand,
   legalName: company.legalName,
-  email: company.email,
+  description,
+  email: company.submissionsEmail,
   url: company.siteUrl,
+  image: `${company.siteUrl}/images/hero.jpg`,
   address: {
     "@type": "PostalAddress",
     streetAddress: company.street,
@@ -44,6 +69,12 @@ const jsonLd = {
     addressCountry: "NL",
   },
   areaServed: "NL",
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "09:00",
+    closes: "17:30",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
